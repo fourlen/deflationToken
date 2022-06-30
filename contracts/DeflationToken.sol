@@ -9,7 +9,6 @@ import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "./libraries/PancakeLibrary.sol";
 import "./interfaces/ITokenToSwapCollector.sol";
 import "./interfaces/IPancakeFactory.sol";
-import "hardhat/console.sol";
 
 contract DeflationToken is ERC20, Ownable {
     IERC20Metadata public immutable tokenToSwap;
@@ -65,7 +64,6 @@ contract DeflationToken is ERC20, Ownable {
         if (noFee[sender]) {
             super._transfer(from, to, amount);
         } else {
-            console.log("Not in whitelist", sender);
             super._transfer(sender, owner(), (amount * 2) / 100); //2% to owner
             address[] memory path = new address[](2);
             path[0] = address(this);
